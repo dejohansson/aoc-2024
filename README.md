@@ -16,5 +16,5 @@ cd day-XX
 ```
 
 ```sh
-deno run -R day-XX.ts
+deno run -R main.ts
 ```
