@@ -1,14 +1,15 @@
 function getInitialPos(map: string[][]): { x: number; y: number } {
   for (let y = 0; y < map.length; y++) {
     const x = map[y].indexOf("^");
-    if (x !== -1) {
-      return { x, y };
-    }
+    if (x !== -1) return { x, y };
   }
   throw new Error("Starting position not found");
 }
 
-function getUnobstructedRoute(initialMap: string[][], initialPos: { x: number; y: number }) {
+function getUnobstructedRoute(
+  initialMap: string[][],
+  initialPos: { x: number; y: number }
+) {
   const map = initialMap.map((line) => [...line]);
   let pos = { x: initialPos.x, y: initialPos.y };
   let direction = { x: 0, y: -1 };
@@ -22,7 +23,8 @@ function getUnobstructedRoute(initialMap: string[][], initialPos: { x: number; y
       nextPos.y >= map.length ||
       nextPos.x < 0 ||
       nextPos.x >= map[nextPos.y].length
-    ) break;
+    )
+      break;
 
     const nextChar = map[nextPos.y][nextPos.x];
     if (nextChar === "#") {
@@ -39,7 +41,10 @@ function getUnobstructedRoute(initialMap: string[][], initialPos: { x: number; y
   return { unobstructedRouteMap: map, numVisitedPositions };
 }
 
-function canLeave(map: string[][], initialPos: { x: number; y: number }): boolean {
+function canLeave(
+  map: string[][],
+  initialPos: { x: number; y: number }
+): boolean {
   let pos = { x: initialPos.x, y: initialPos.y };
   let direction = { x: 0, y: -1 };
 
@@ -51,7 +56,8 @@ function canLeave(map: string[][], initialPos: { x: number; y: number }): boolea
       nextPos.y >= map.length ||
       nextPos.x < 0 ||
       nextPos.x >= map[nextPos.y].length
-    ) return true;
+    )
+      return true;
 
     const nextChar = map[nextPos.y][nextPos.x];
     if (nextChar === "#" || nextChar === "O") {
@@ -70,7 +76,10 @@ function main() {
   const initialMap = input.split(/\r?\n/).map((line) => line.split(""));
   const initialPos = getInitialPos(initialMap);
 
-  const { unobstructedRouteMap, numVisitedPositions } = getUnobstructedRoute(initialMap, initialPos);
+  const { unobstructedRouteMap, numVisitedPositions } = getUnobstructedRoute(
+    initialMap,
+    initialPos
+  );
 
   let numObstructedPositions = 0;
 
